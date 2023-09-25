@@ -1,0 +1,12 @@
+### 기능 구현 목록
+- [ ] 간단 forum CRUD API
+- [ ] 간단 posts CRUD API
+- [ ] comment 무한 뎁스 구조 API
+  - [ ] C,U,D
+  - [ ] R
+- [ ] view, like count
+- [ ] comment vote
+- [ ] comment에 이미지, 사진 첨부
+- [ ] 로그인
+  - [ ] 소셜 로그인
+  - [ ] SSO
