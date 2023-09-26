@@ -5,11 +5,22 @@
   - [x] post wordCount 계산 후 저장
   - [x] post wordCount 검증
 - [ ] comment 무한 뎁스 구조 API
-  - [ ] C,U,D
-  - [ ] R
+  - [x] 단순 CRUD
+  - [ ] 무한뎁스
+- [ ] soft delete
 - [ ] view, like count
 - [ ] comment vote
 - [ ] comment에 이미지, 사진 첨부
-- [ ] 로그인
-  - [ ] 소셜 로그인
-  - [ ] SSO
+- [ ] CRUD 기타
+  - [ ] pagination
+- [ ] count 같은거 redis로?
+- [ ] security
+  - [ ] api 보호 및 현재 유저 정보..
+  - [ ] 로그인
+    - [ ] 소셜 로그인
+    - [ ] SSO
+- [ ] mongodb 관련
+  - [ ] _class 없애기?
+  - [ ] 트랜잭션 사실상 못쓰는데 대처법?
+  - [ ] index
+  - [ ] join

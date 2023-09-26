@@ -56,4 +56,12 @@ public class Post {
 			throw new MaxPostLengthExceededException(message);
 		}
 	}
+
+	public void increaseReplyCount(){
+		this.replyCount++;
+	}
+
+	public void decreaseReplyCount(){
+		this.replyCount--;
+	}
 }
