@@ -1,4 +1,5 @@
-### 기능 구현 목록
+# 기능 구현 목록
+### 서버
 - [x] 간단 forum CRUD API
   - [x] post 생성/삭제에 따른 postsCount 변경
 - [x] 간단 posts CRUD API
@@ -6,14 +7,16 @@
   - [x] post wordCount 검증
 - [ ] comment 무한 뎁스 구조 API
   - [x] 단순 CRUD
-  - [ ] 무한뎁스
+  - [ ] 무한 depth
 - [ ] soft delete
 - [ ] view, like count
 - [ ] comment vote
 - [ ] comment에 이미지, 사진 첨부
 - [ ] CRUD 기타
   - [ ] pagination
-- [ ] count 같은거 redis로?
+- [ ] 동시성 이슈
+  - [ ] count 같은거 redis로?
+- [ ] 트래픽, 성능 이슈
 - [ ] security
   - [ ] api 보호 및 현재 유저 정보..
   - [ ] 로그인
@@ -24,3 +27,5 @@
   - [ ] 트랜잭션 사실상 못쓰는데 대처법?
   - [ ] index
   - [ ] join
+### 화면...
+  - [ ] 댓글 화면
