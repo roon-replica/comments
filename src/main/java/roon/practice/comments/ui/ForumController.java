@@ -29,8 +29,8 @@ public class ForumController {
 	}
 
 	@PostMapping("/create-forum")
-	public String createForum(@RequestBody Forum forum) {
-		return forumService.create(forum);
+	public String save(@RequestBody Forum forum) {
+		return forumService.save(forum);
 	}
 
 }

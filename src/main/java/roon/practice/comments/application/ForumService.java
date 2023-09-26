@@ -15,7 +15,7 @@ public class ForumService {
 
 	private final ForumRepository forumRepository;
 
-	public String create(Forum forum) {
+	public String save(Forum forum) {
 		return forumRepository.save(forum).getId();
 	}
 

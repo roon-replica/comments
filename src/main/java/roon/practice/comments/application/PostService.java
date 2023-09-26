@@ -8,6 +8,8 @@ import roon.practice.comments.domain.DocumentNotFoundException;
 import roon.practice.comments.domain.ForumRepository;
 import roon.practice.comments.domain.Post;
 import roon.practice.comments.domain.PostRepository;
+import roon.practice.comments.infra.IdGenerator;
+import roon.practice.comments.ui.dto.CreatePostRequest;
 
 @Transactional
 @RequiredArgsConstructor
@@ -17,21 +19,15 @@ public class PostService {
 	private final PostRepository postRepository;
 	private final ForumRepository forumRepository;
 
-	public String save(Post postRequest) {
-		var forum = forumRepository.findById(postRequest.getForumId())
+	public String create(CreatePostRequest request) {
+		var forum = forumRepository.findById(request.forumId())
 				.orElseThrow(DocumentNotFoundException::new);
 
-		var maybePost = postRepository.findById(postRequest.getId())
-				.orElse(null);
+		var post = new Post(IdGenerator.id(), request.forumId(), request.authorId(), request.title(), request.contents());
 
-		if (maybePost == null) {
-			forum.increasePostsCount();
-		}
-
+		forum.increasePostsCount();
 		forumRepository.save(forum);
-		var savedPost = postRepository.save(postRequest);
-
-		return savedPost.getId();
+		return postRepository.save(post).getId();
 	}
 
 	public String delete(String postId) {
