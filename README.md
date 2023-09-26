@@ -3,7 +3,7 @@
   - [x] post 생성/삭제에 따른 postsCount 변경
 - [x] 간단 posts CRUD API
   - [x] post wordCount 계산 후 저장
-  - [ ] post wordCount validation
+  - [x] post wordCount 검증
 - [ ] comment 무한 뎁스 구조 API
   - [ ] C,U,D
   - [ ] R

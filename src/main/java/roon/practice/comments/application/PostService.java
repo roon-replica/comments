@@ -22,7 +22,7 @@ public class PostService {
 
 	public String create(CreatePostRequest request) {
 		var forum = forumRepository.findById(request.forumId())
-				.orElseThrow(DocumentNotFoundException::new);
+				.orElseThrow(() -> new DocumentNotFoundException(request.forumId()));
 
 		var post = new Post(IdGenerator.id(), request.forumId(), request.authorId(), request.title(), request.contents());
 
@@ -33,10 +33,10 @@ public class PostService {
 
 	public String update(UpdatePostRequest request) {
 		forumRepository.findById(request.forumId())
-				.orElseThrow(DocumentNotFoundException::new);
+				.orElseThrow(() -> new DocumentNotFoundException(request.forumId()));
 
 		var post = postRepository.findById(request.id())
-				.orElseThrow(DocumentNotFoundException::new);
+				.orElseThrow(() -> new DocumentNotFoundException(request.id()));
 
 		post.update(request.title(), request.contents());
 
@@ -45,9 +45,9 @@ public class PostService {
 
 	public String delete(String postId) {
 		var post = postRepository.findById(postId)
-				.orElseThrow(DocumentNotFoundException::new);
+				.orElseThrow(() -> new DocumentNotFoundException(postId));
 		var forum = forumRepository.findById(post.getForumId())
-				.orElseThrow(DocumentNotFoundException::new);
+				.orElseThrow(() -> new DocumentNotFoundException(post.getForumId()));
 
 		postRepository.delete(post);
 

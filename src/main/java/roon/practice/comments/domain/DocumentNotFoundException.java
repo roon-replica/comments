@@ -1,16 +1,11 @@
 package roon.practice.comments.domain;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@Data
-public class DocumentNotFoundException extends RuntimeException {
-
-	private String message;
-
-	public DocumentNotFoundException(String message) {
-		this.message = message;
+public class DocumentNotFoundException extends BusinessException {
+	public DocumentNotFoundException(String id){
+		super("Not found id: "+id);
 	}
 
 }

@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "post")
 public class Post {
 
+	private static final int MAX_LENGTH = 100;
+
 	@Id
 	private String id;
 	private String forumId;
@@ -26,6 +28,8 @@ public class Post {
 
 	@Builder
 	public Post(String id, String forumId, String authorId, String title, String raw) {
+		validateLength(raw.length());
+
 		this.id = id;
 		this.forumId = forumId;
 		this.authorId = authorId;
@@ -38,9 +42,18 @@ public class Post {
 	}
 
 	public void update(String title, String raw) {
+		validateLength(raw.length());
+
 		this.title = title;
 		this.raw = raw;
 		this.wordCount = raw.length();
 		this.updatedAt = LocalDateTime.now();
+	}
+
+	private void validateLength(int length) {
+		if (length > MAX_LENGTH) {
+			String message = "length: " + length + ", max length: " + MAX_LENGTH;
+			throw new MaxPostLengthExceededException(message);
+		}
 	}
 }

@@ -5,14 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import roon.practice.comments.domain.BusinessException;
 import roon.practice.comments.domain.DocumentNotFoundException;
 
 @Slf4j
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-	@ExceptionHandler({DocumentNotFoundException.class})
-	public ResponseEntity<ExceptionConstants> handle(DocumentNotFoundException e) {
+	@ExceptionHandler({BusinessException.class})
+	public ResponseEntity<ExceptionConstants> handle(BusinessException e) {
 		log.error(e.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 				.body(ExceptionConstants.BAD_REQUEST);
