@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.PostService;
 import roon.practice.comments.domain.Post;
 import roon.practice.comments.ui.dto.CreatePostRequest;
+import roon.practice.comments.ui.dto.UpdatePostRequest;
 
 @RequiredArgsConstructor
 @RestController
 public class PostController {
+
 	private final PostService postService;
 
 	@GetMapping("/posts")
@@ -31,8 +33,13 @@ public class PostController {
 		return postService.create(request);
 	}
 
+	@PostMapping("/update-post")
+	public String update(@RequestBody UpdatePostRequest request) {
+		return postService.update(request);
+	}
+
 	@PostMapping("/delete-post")
-	public String delete(String postId){
+	public String delete(String postId) {
 		return postService.delete(postId);
 	}
 

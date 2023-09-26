@@ -1,7 +1,6 @@
 package roon.practice.comments.domain;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "post")
 public class Post {
+
 	@Id
 	private String id;
 	private String forumId;
@@ -22,9 +22,10 @@ public class Post {
 	private int wordCount;
 	private int replyCount;
 	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 
 	@Builder
-	public Post(String id, String forumId, String authorId, String title, String raw){
+	public Post(String id, String forumId, String authorId, String title, String raw) {
 		this.id = id;
 		this.forumId = forumId;
 		this.authorId = authorId;
@@ -36,7 +37,10 @@ public class Post {
 		this.createdAt = LocalDateTime.now();
 	}
 
-	public void calculateWordCount(){
+	public void update(String title, String raw) {
+		this.title = title;
+		this.raw = raw;
 		this.wordCount = raw.length();
+		this.updatedAt = LocalDateTime.now();
 	}
 }

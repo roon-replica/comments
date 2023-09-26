@@ -10,6 +10,7 @@ import roon.practice.comments.domain.Post;
 import roon.practice.comments.domain.PostRepository;
 import roon.practice.comments.infra.IdGenerator;
 import roon.practice.comments.ui.dto.CreatePostRequest;
+import roon.practice.comments.ui.dto.UpdatePostRequest;
 
 @Transactional
 @RequiredArgsConstructor
@@ -27,6 +28,18 @@ public class PostService {
 
 		forum.increasePostsCount();
 		forumRepository.save(forum);
+		return postRepository.save(post).getId();
+	}
+
+	public String update(UpdatePostRequest request) {
+		forumRepository.findById(request.forumId())
+				.orElseThrow(DocumentNotFoundException::new);
+
+		var post = postRepository.findById(request.id())
+				.orElseThrow(DocumentNotFoundException::new);
+
+		post.update(request.title(), request.contents());
+
 		return postRepository.save(post).getId();
 	}
 
