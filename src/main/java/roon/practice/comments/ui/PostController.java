@@ -27,7 +27,12 @@ public class PostController {
 
 	@PostMapping("/create-post")
 	public String createPost(@RequestBody Post post) {
-		return postService.create(post);
+		return postService.save(post);
+	}
+
+	@PostMapping("/delete-post")
+	public String deletePost(String postId){
+		return postService.delete(postId);
 	}
 
 }

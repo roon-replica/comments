@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Post {
 	@Id
 	private String id;
+	private String forumId;
 	private String authorId;
 	private String title;
 	private String raw;
