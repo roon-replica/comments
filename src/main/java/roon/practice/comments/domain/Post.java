@@ -1,6 +1,7 @@
 package roon.practice.comments.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +24,13 @@ public class Post {
 	private String cooked;
 	private int wordCount;
 	private int replyCount;
+
+	private List<String> tagIds;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 
 	@Builder
-	public Post(String id, String forumId, String authorId, String title, String raw) {
+	public Post(String id, String forumId, String authorId, String title, String raw, List<String> tagIds) {
 		validateLength(raw.length());
 
 		this.id = id;
@@ -38,15 +41,19 @@ public class Post {
 
 		this.wordCount = raw.length();
 		this.replyCount = 0;
+
+		this.tagIds = tagIds;
+
 		this.createdAt = LocalDateTime.now();
 	}
 
-	public void update(String title, String raw) {
+	public void update(String title, String raw, List<String> tagIds) {
 		validateLength(raw.length());
 
 		this.title = title;
 		this.raw = raw;
 		this.wordCount = raw.length();
+		this.tagIds = tagIds;
 		this.updatedAt = LocalDateTime.now();
 	}
 
@@ -57,11 +64,11 @@ public class Post {
 		}
 	}
 
-	public void increaseReplyCount(){
+	public void increaseReplyCount() {
 		this.replyCount++;
 	}
 
-	public void decreaseReplyCount(){
+	public void decreaseReplyCount() {
 		this.replyCount--;
 	}
 }

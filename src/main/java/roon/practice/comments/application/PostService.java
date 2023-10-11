@@ -24,7 +24,7 @@ public class PostService {
 		var forum = forumRepository.findById(request.forumId())
 				.orElseThrow(() -> new DocumentNotFoundException(request.forumId()));
 
-		var post = new Post(IdGenerator.id(), request.forumId(), request.authorId(), request.title(), request.contents());
+		var post = new Post(IdGenerator.id(), request.forumId(), request.authorId(), request.title(), request.contents(), request.tagIds());
 
 		forum.increasePostsCount();
 		forumRepository.save(forum);
@@ -38,7 +38,7 @@ public class PostService {
 		var post = postRepository.findById(request.id())
 				.orElseThrow(() -> new DocumentNotFoundException(request.id()));
 
-		post.update(request.title(), request.contents());
+		post.update(request.title(), request.contents(), request.tagIds());
 
 		return postRepository.save(post).getId();
 	}
