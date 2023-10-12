@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.TagService;
 import roon.practice.comments.domain.Tag;
@@ -30,12 +31,12 @@ public class TagController {
 	}
 
 	@PostMapping("/create-tag")
-	public String createTag(CreateTagRequest request) {
+	public String createTag(@RequestBody CreateTagRequest request) {
 		return tagService.createTag(request);
 	}
 
 	@PostMapping("/update-tag")
-	public String updateTag(UpdateTagRequest request) {
+	public String updateTag(@RequestBody UpdateTagRequest request) {
 		return tagService.updateTag(request);
 	}
 

@@ -26,6 +26,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+
+    implementation("io.getunleash:unleash-client-java:5.1.0")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
