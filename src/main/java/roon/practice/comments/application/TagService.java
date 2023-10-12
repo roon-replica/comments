@@ -1,7 +1,6 @@
 package roon.practice.comments.application;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import roon.practice.comments.domain.DocumentNotFoundException;
 import roon.practice.comments.domain.Tag;
@@ -14,22 +13,17 @@ import roon.practice.comments.ui.dto.UpdateTagRequest;
 public class TagService {
 
 	private TagRepository tagRepository;
-	private FeatureToggle featureToggle;
+	private FeatureToggleFacade featureToggleFacade;
 
 
-	public TagService(TagRepository tagRepository, FeatureToggle featureToggle) {
+	public TagService(TagRepository tagRepository, FeatureToggleFacade featureToggleFacade) {
 		this.tagRepository = tagRepository;
-		this.featureToggle = featureToggle;
+		this.featureToggleFacade = featureToggleFacade;
 	}
 
 	public String createTag(CreateTagRequest request) {
 		var tag = new Tag(IdGenerator.id(), request.name());
-		if (featureToggle.shouldValidateTagNameLength()) {
-			tag.validateTagNameLength();
-		}
-		if (featureToggle.shouldValidateBannedWords()) {
-			tag.validateTagNameWords();
-		}
+		featureToggleFacade.validateTagName(tag);
 
 		return tagRepository.save(tag).getId();
 	}
@@ -39,13 +33,7 @@ public class TagService {
 				.orElseThrow(DocumentNotFoundException::new);
 
 		tag.update(request.name());
-
-		if (featureToggle.shouldValidateTagNameLength()) {
-			tag.validateTagNameLength();
-		}
-		if (featureToggle.shouldValidateBannedWords()) {
-			tag.validateTagNameWords();
-		}
+		featureToggleFacade.validateTagName(tag);
 
 		return tagRepository.save(tag).getId();
 	}

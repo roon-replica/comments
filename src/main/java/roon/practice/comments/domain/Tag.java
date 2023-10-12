@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
