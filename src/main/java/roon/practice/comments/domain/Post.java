@@ -1,6 +1,6 @@
 package roon.practice.comments.domain;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class Post {
 
 	@Id
 	private String id;
-	private String forumId;
+	private String categoryId;
 	private String authorId;
 	private String title;
 	private String raw;
@@ -26,15 +26,15 @@ public class Post {
 	private int replyCount;
 
 	private List<String> tagIds;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private Instant createdAt;
+	private Instant updatedAt;
 
 	@Builder
-	public Post(String id, String forumId, String authorId, String title, String raw, List<String> tagIds) {
+	public Post(String id, String categoryId, String authorId, String title, String raw, List<String> tagIds) {
 		validateLength(raw.length());
 
 		this.id = id;
-		this.forumId = forumId;
+		this.categoryId = categoryId;
 		this.authorId = authorId;
 		this.title = title;
 		this.raw = raw;
@@ -44,7 +44,7 @@ public class Post {
 
 		this.tagIds = tagIds;
 
-		this.createdAt = LocalDateTime.now();
+		this.createdAt = Instant.now();
 	}
 
 	public void update(String title, String raw, List<String> tagIds) {
@@ -54,7 +54,7 @@ public class Post {
 		this.raw = raw;
 		this.wordCount = raw.length();
 		this.tagIds = tagIds;
-		this.updatedAt = LocalDateTime.now();
+		this.updatedAt = Instant.now();
 	}
 
 	private void validateLength(int length) {

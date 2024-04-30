@@ -1,6 +1,6 @@
 package roon.practice.comments.domain;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,27 +13,27 @@ public class Tag {
 
 	private String id;
 	private String name;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private Instant createdAt;
+	private Instant updatedAt;
 
 	private static final List<String> bannedWords = List.of("ban1", "ban2");
 
-	private static final int maxLength = 15;
+	private static final int MAX_LENGTH = 15;
 
 	public Tag(String id, String name) {
 		this.id = id;
 		this.name = name;
 
-		this.createdAt = LocalDateTime.now();
+		this.createdAt = Instant.now();
 	}
 
 	public void update(String name) {
 		this.name = name;
-		this.updatedAt = LocalDateTime.now();
+		this.updatedAt = Instant.now();
 	}
 
 	public void validateTagNameLength() {
-		if (name.length() > maxLength) {
+		if (name.length() > MAX_LENGTH) {
 			throw new IllegalRequestException("tag name length too long");
 		}
 	}

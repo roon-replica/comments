@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.TagService;
 import roon.practice.comments.domain.Tag;
-import roon.practice.comments.ui.dto.CreateTagRequest;
-import roon.practice.comments.ui.dto.UpdateTagRequest;
+import roon.practice.comments.ui.request.CreateTagReq;
+import roon.practice.comments.ui.request.UpdateTagReq;
 
 @RestController
 public class TagController {
@@ -31,12 +31,12 @@ public class TagController {
 	}
 
 	@PostMapping("/create-tag")
-	public String createTag(@RequestBody CreateTagRequest request) {
+	public String createTag(@RequestBody CreateTagReq request) {
 		return tagService.createTag(request);
 	}
 
 	@PostMapping("/update-tag")
-	public String updateTag(@RequestBody UpdateTagRequest request) {
+	public String updateTag(@RequestBody UpdateTagReq request) {
 		return tagService.updateTag(request);
 	}
 

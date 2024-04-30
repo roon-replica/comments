@@ -1,6 +1,6 @@
 package roon.practice.comments.domain;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,14 +12,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "forum")
-public class Forum {
+@Document(collection = "category")
+public class Category {
 
 	@Id
 	private String id;
 	private String title;
 	private int postsCount;
-	private LocalDateTime createdAt;
+	private Instant createdAt;
 
 	public void increasePostsCount() {
 		this.postsCount++;

@@ -6,34 +6,31 @@ import roon.practice.comments.domain.DocumentNotFoundException;
 import roon.practice.comments.domain.Tag;
 import roon.practice.comments.domain.TagRepository;
 import roon.practice.comments.infra.IdGenerator;
-import roon.practice.comments.ui.dto.CreateTagRequest;
-import roon.practice.comments.ui.dto.UpdateTagRequest;
+import roon.practice.comments.ui.request.CreateTagReq;
+import roon.practice.comments.ui.request.UpdateTagReq;
 
 @Service
 public class TagService {
 
 	private TagRepository tagRepository;
-	private FeatureToggleFacade featureToggleFacade;
 
-
-	public TagService(TagRepository tagRepository, FeatureToggleFacade featureToggleFacade) {
+	public TagService(TagRepository tagRepository) {
 		this.tagRepository = tagRepository;
-		this.featureToggleFacade = featureToggleFacade;
 	}
 
-	public String createTag(CreateTagRequest request) {
+	public String createTag(CreateTagReq request) {
 		var tag = new Tag(IdGenerator.id(), request.name());
-		featureToggleFacade.validateTagName(tag);
+		// validate tag name
 
 		return tagRepository.save(tag).getId();
 	}
 
-	public String updateTag(UpdateTagRequest request) {
+	public String updateTag(UpdateTagReq request) {
 		var tag = tagRepository.findById(request.id())
 				.orElseThrow(DocumentNotFoundException::new);
 
 		tag.update(request.name());
-		featureToggleFacade.validateTagName(tag);
+		// validate tag name
 
 		return tagRepository.save(tag).getId();
 	}

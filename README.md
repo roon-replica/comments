@@ -1,12 +1,12 @@
 # 기능 구현 목록
 ### 서버
-- [x] 간단 forum CRUD API
+- [x] 간단 category CRUD API
   - [x] post 생성/삭제에 따른 postsCount 변경
 - [x] 간단 posts CRUD API
   - [x] post wordCount 계산 후 저장
   - [x] post wordCount 검증
 - [x] feature 토글링
-  - tag name validation에 시범 적용
+  - tag name validation에 시범 적용 (제거)
 - [ ] comment 무한 뎁스 구조 API
   - [x] 단순 CRUD
   - [ ] 무한 depth

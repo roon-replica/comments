@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.PostService;
 import roon.practice.comments.domain.Post;
-import roon.practice.comments.ui.dto.CreatePostRequest;
-import roon.practice.comments.ui.dto.UpdatePostRequest;
+import roon.practice.comments.ui.request.CreatePostReq;
+import roon.practice.comments.ui.request.UpdatePostReq;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,12 +29,12 @@ public class PostController {
 	}
 
 	@PostMapping("/create-post")
-	public String create(@RequestBody CreatePostRequest request) {
+	public String create(@RequestBody CreatePostReq request) {
 		return postService.create(request);
 	}
 
 	@PostMapping("/update-post")
-	public String update(@RequestBody UpdatePostRequest request) {
+	public String update(@RequestBody UpdatePostReq request) {
 		return postService.update(request);
 	}
 

@@ -1,6 +1,6 @@
 package roon.practice.comments.domain.comment;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -16,8 +16,8 @@ public class Comment {
 	private String authorId;
 	private String postId;
 	private String contents;
-	private LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
+	private Instant createdAt;
+	private Instant updatedAt;
 	private String parentId;
 	private int upVoteCount;
 	private int downVoteCount;
@@ -29,13 +29,13 @@ public class Comment {
 		this.contents = contents;
 		this.parentId = parentId;
 
-		this.createdAt = LocalDateTime.now();
+		this.createdAt = Instant.now();
 		this.upVoteCount = 0;
 		this.downVoteCount = 0;
 	}
 
 	public void update(String contents) {
 		this.contents = contents;
-		this.updatedAt = LocalDateTime.now();
+		this.updatedAt = Instant.now();
 	}
 }

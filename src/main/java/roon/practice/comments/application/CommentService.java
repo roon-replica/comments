@@ -8,8 +8,8 @@ import roon.practice.comments.domain.PostRepository;
 import roon.practice.comments.domain.comment.Comment;
 import roon.practice.comments.domain.comment.CommentRepository;
 import roon.practice.comments.infra.IdGenerator;
-import roon.practice.comments.ui.dto.CreateCommentRequest;
-import roon.practice.comments.ui.dto.UpdateCommentRequest;
+import roon.practice.comments.ui.request.CreateCommentReq;
+import roon.practice.comments.ui.request.UpdateCommentReq;
 
 @RequiredArgsConstructor
 @Service
@@ -18,7 +18,7 @@ public class CommentService {
 	private final PostRepository postRepository;
 	private final CommentRepository commentRepository;
 
-	public String create(CreateCommentRequest request) {
+	public String create(CreateCommentReq request) {
 		var post = postRepository.findById(request.postId())
 				.orElseThrow(() -> new DocumentNotFoundException(request.postId()));
 
@@ -29,7 +29,7 @@ public class CommentService {
 		return id;
 	}
 
-	public String update(UpdateCommentRequest request) {
+	public String update(UpdateCommentReq request) {
 		postRepository.findById(request.postId())
 				.orElseThrow(() -> new DocumentNotFoundException(request.postId()));
 
