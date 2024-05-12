@@ -8,6 +8,7 @@ import roon.practice.comments.domain.TagRepository;
 import roon.practice.comments.infra.IdGenerator;
 import roon.practice.comments.ui.request.CreateTagReq;
 import roon.practice.comments.ui.request.UpdateTagReq;
+import roon.practice.comments.ui.response.TagRes;
 
 @Service
 public class TagService {
@@ -42,13 +43,18 @@ public class TagService {
 		tagRepository.delete(tag);
 	}
 
-	public Tag findById(String id) {
-		return tagRepository.findById(id)
+	public TagRes findById(String id) {
+		var tag = tagRepository.findById(id)
 				.orElseThrow(DocumentNotFoundException::new);
+
+		return new TagRes(tag.getId(), tag.getName(), tag.getCreatedAt(), tag.getUpdatedAt());
 	}
 
-	public List<Tag> findAll() {
-		return tagRepository.findAll();
+	public List<TagRes> findAll() {
+		var tags = tagRepository.findAll();
+		return tags.stream()
+				.map(t -> new TagRes(t.getId(), t.getName(), t.getCreatedAt(), t.getUpdatedAt()))
+				.toList();
 	}
 
 }

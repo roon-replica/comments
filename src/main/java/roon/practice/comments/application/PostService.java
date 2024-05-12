@@ -4,13 +4,15 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import roon.practice.comments.domain.DocumentNotFoundException;
 import roon.practice.comments.domain.CategoryRepository;
+import roon.practice.comments.domain.DocumentNotFoundException;
 import roon.practice.comments.domain.Post;
 import roon.practice.comments.domain.PostRepository;
 import roon.practice.comments.infra.IdGenerator;
 import roon.practice.comments.ui.request.CreatePostReq;
 import roon.practice.comments.ui.request.UpdatePostReq;
+import roon.practice.comments.ui.response.PostRes;
+import roon.practice.comments.ui.response.PostRes.PostAdditionalInfo;
 
 @Transactional
 @RequiredArgsConstructor
@@ -57,12 +59,21 @@ public class PostService {
 		return postId;
 	}
 
-	public List<Post> findAll() {
-		return postRepository.findAll();
+	public List<PostRes> findAll() {
+		return postRepository.findAll().stream()
+				.map(post -> {
+					var additionalInfo = new PostAdditionalInfo(post.getCooked(), post.getWordCount(), post.getReplyCount(), post.getTagIds());
+					return new PostRes(post.getId(), post.getCategoryId(), post.getAuthorId(), post.getTitle(), post.getRaw(), additionalInfo,
+							post.getCreatedAt(),
+							post.getUpdatedAt());
+				}).toList();
 	}
 
-	public Post findById(String id) {
-		return postRepository.findById(id)
+	public PostRes findById(String id) {
+		var post = postRepository.findById(id)
 				.orElseThrow(DocumentNotFoundException::new);
+		var additionalInfo = new PostAdditionalInfo(post.getCooked(), post.getWordCount(), post.getReplyCount(), post.getTagIds());
+		return new PostRes(post.getId(), post.getCategoryId(), post.getAuthorId(), post.getTitle(), post.getRaw(), additionalInfo, post.getCreatedAt(),
+				post.getUpdatedAt());
 	}
 }

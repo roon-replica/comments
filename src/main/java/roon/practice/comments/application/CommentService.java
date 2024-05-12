@@ -10,6 +10,7 @@ import roon.practice.comments.domain.comment.CommentRepository;
 import roon.practice.comments.infra.IdGenerator;
 import roon.practice.comments.ui.request.CreateCommentReq;
 import roon.practice.comments.ui.request.UpdateCommentReq;
+import roon.practice.comments.ui.response.CommentRes;
 
 @RequiredArgsConstructor
 @Service
@@ -53,12 +54,20 @@ public class CommentService {
 		return id;
 	}
 
-	public List<Comment> findAll() {
-		return commentRepository.findAll();
+	public List<CommentRes> findAll() {
+		var comments = commentRepository.findAll();
+
+		return comments.stream()
+				.map(c -> new CommentRes(c.getId(), c.getAuthorId(), c.getPostId(), c.getParentId(), c.getContents(), c.getCreatedAt(), c.getUpdatedAt(),
+						c.getUpVoteCount(), c.getDownVoteCount()))
+				.toList();
 	}
 
-	public Comment findById(String id) {
-		return commentRepository.findById(id)
+	public CommentRes findById(String id) {
+		var c = commentRepository.findById(id)
 				.orElseThrow(() -> new DocumentNotFoundException(id));
+
+		return new CommentRes(c.getId(), c.getAuthorId(), c.getPostId(), c.getParentId(), c.getContents(), c.getCreatedAt(), c.getUpdatedAt(),
+				c.getUpVoteCount(), c.getDownVoteCount());
 	}
 }

@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.PostService;
-import roon.practice.comments.domain.Post;
 import roon.practice.comments.ui.request.CreatePostReq;
 import roon.practice.comments.ui.request.UpdatePostReq;
+import roon.practice.comments.ui.response.PostRes;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,12 +19,12 @@ public class PostController {
 	private final PostService postService;
 
 	@GetMapping("/posts")
-	public List<Post> findAll() {
+	public List<PostRes> findAll() {
 		return postService.findAll();
 	}
 
 	@GetMapping("/posts/{id}")
-	public Post findById(@PathVariable String id) {
+	public PostRes findById(@PathVariable String id) {
 		return postService.findById(id);
 	}
 

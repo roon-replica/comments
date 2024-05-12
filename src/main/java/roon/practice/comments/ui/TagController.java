@@ -10,6 +10,7 @@ import roon.practice.comments.application.TagService;
 import roon.practice.comments.domain.Tag;
 import roon.practice.comments.ui.request.CreateTagReq;
 import roon.practice.comments.ui.request.UpdateTagReq;
+import roon.practice.comments.ui.response.TagRes;
 
 @RestController
 public class TagController {
@@ -21,12 +22,12 @@ public class TagController {
 	}
 
 	@GetMapping("/tags")
-	public List<Tag> tags() {
+	public List<TagRes> tags() {
 		return tagService.findAll();
 	}
 
 	@GetMapping("/tags/{id}")
-	public Tag getTagById(String id) {
+	public TagRes getTagById(String id) {
 		return tagService.findById(id);
 	}
 

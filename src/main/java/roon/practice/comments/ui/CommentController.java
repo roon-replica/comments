@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.CommentService;
-import roon.practice.comments.domain.comment.Comment;
 import roon.practice.comments.ui.request.CreateCommentReq;
 import roon.practice.comments.ui.request.UpdateCommentReq;
+import roon.practice.comments.ui.response.CommentRes;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,12 +19,12 @@ public class CommentController {
 	private final CommentService commentService;
 
 	@GetMapping("/comments")
-	public List<Comment> comments() {
+	public List<CommentRes> comments() {
 		return commentService.findAll();
 	}
 
 	@GetMapping("/comments/{id}")
-	public Comment comment(@PathVariable String id) {
+	public CommentRes comment(@PathVariable String id) {
 		return commentService.findById(id);
 	}
 
