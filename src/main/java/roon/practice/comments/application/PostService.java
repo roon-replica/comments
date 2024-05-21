@@ -1,7 +1,8 @@
 package roon.practice.comments.application;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import roon.practice.comments.domain.CategoryRepository;
@@ -12,7 +13,6 @@ import roon.practice.comments.infra.IdGenerator;
 import roon.practice.comments.ui.request.CreatePostReq;
 import roon.practice.comments.ui.request.UpdatePostReq;
 import roon.practice.comments.ui.response.PostRes;
-import roon.practice.comments.ui.response.PostRes.PostAdditionalInfo;
 
 @Transactional
 @RequiredArgsConstructor
@@ -59,21 +59,16 @@ public class PostService {
 		return postId;
 	}
 
-	public List<PostRes> findAll() {
-		return postRepository.findAll().stream()
-				.map(post -> {
-					var additionalInfo = new PostAdditionalInfo(post.getCooked(), post.getWordCount(), post.getReplyCount(), post.getTagIds());
-					return new PostRes(post.getId(), post.getCategoryId(), post.getAuthorId(), post.getTitle(), post.getRaw(), additionalInfo,
-							post.getCreatedAt(),
-							post.getUpdatedAt());
-				}).toList();
+	public Page<PostRes> findByPage(int pageNumber, int pageSize) {
+		var pageable = PageRequest.of(pageNumber, pageSize);
+
+		return postRepository.findAll(pageable)
+				.map(PostRes::from);
 	}
 
 	public PostRes findById(String id) {
-		var post = postRepository.findById(id)
+		return postRepository.findById(id)
+				.map(PostRes::from)
 				.orElseThrow(DocumentNotFoundException::new);
-		var additionalInfo = new PostAdditionalInfo(post.getCooked(), post.getWordCount(), post.getReplyCount(), post.getTagIds());
-		return new PostRes(post.getId(), post.getCategoryId(), post.getAuthorId(), post.getTitle(), post.getRaw(), additionalInfo, post.getCreatedAt(),
-				post.getUpdatedAt());
 	}
 }

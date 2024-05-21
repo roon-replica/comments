@@ -1,13 +1,13 @@
 package roon.practice.comments.ui;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.TagService;
-import roon.practice.comments.domain.Tag;
 import roon.practice.comments.ui.request.CreateTagReq;
 import roon.practice.comments.ui.request.UpdateTagReq;
 import roon.practice.comments.ui.response.TagRes;
@@ -22,8 +22,8 @@ public class TagController {
 	}
 
 	@GetMapping("/tags")
-	public List<TagRes> tags() {
-		return tagService.findAll();
+	public Page<TagRes> tags(@RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
+		return tagService.findByPage(pageNumber, pageSize);
 	}
 
 	@GetMapping("/tags/{id}")

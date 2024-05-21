@@ -1,6 +1,7 @@
 package roon.practice.comments.application;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import roon.practice.comments.domain.DocumentNotFoundException;
 import roon.practice.comments.domain.Tag;
@@ -47,14 +48,13 @@ public class TagService {
 		var tag = tagRepository.findById(id)
 				.orElseThrow(DocumentNotFoundException::new);
 
-		return new TagRes(tag.getId(), tag.getName(), tag.getCreatedAt(), tag.getUpdatedAt());
+		return TagRes.from(tag);
 	}
 
-	public List<TagRes> findAll() {
-		var tags = tagRepository.findAll();
-		return tags.stream()
-				.map(t -> new TagRes(t.getId(), t.getName(), t.getCreatedAt(), t.getUpdatedAt()))
-				.toList();
+	public Page<TagRes> findByPage(int pageNumber, int pageSize) {
+		var pageable = PageRequest.of(pageNumber, pageSize);
+		return tagRepository.findAll(pageable)
+				.map(TagRes::from);
 	}
 
 }

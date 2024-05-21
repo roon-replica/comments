@@ -1,7 +1,8 @@
 package roon.practice.comments.application;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import roon.practice.comments.domain.DocumentNotFoundException;
 import roon.practice.comments.domain.PostRepository;
@@ -54,20 +55,16 @@ public class CommentService {
 		return id;
 	}
 
-	public List<CommentRes> findAll() {
-		var comments = commentRepository.findAll();
-
-		return comments.stream()
-				.map(c -> new CommentRes(c.getId(), c.getAuthorId(), c.getPostId(), c.getParentId(), c.getContents(), c.getCreatedAt(), c.getUpdatedAt(),
-						c.getUpVoteCount(), c.getDownVoteCount()))
-				.toList();
+	public Page<CommentRes> findByPage(int pageNumber, int pageSize) {
+		var pageable = PageRequest.of(pageNumber, pageSize);
+		return commentRepository.findAll(pageable)
+				.map(CommentRes::from);
 	}
 
 	public CommentRes findById(String id) {
-		var c = commentRepository.findById(id)
+		var comment = commentRepository.findById(id)
 				.orElseThrow(() -> new DocumentNotFoundException(id));
 
-		return new CommentRes(c.getId(), c.getAuthorId(), c.getPostId(), c.getParentId(), c.getContents(), c.getCreatedAt(), c.getUpdatedAt(),
-				c.getUpVoteCount(), c.getDownVoteCount());
+		return CommentRes.from(comment);
 	}
 }

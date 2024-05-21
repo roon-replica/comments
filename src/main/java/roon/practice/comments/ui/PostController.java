@@ -1,11 +1,12 @@
 package roon.practice.comments.ui;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.PostService;
 import roon.practice.comments.ui.request.CreatePostReq;
@@ -19,12 +20,12 @@ public class PostController {
 	private final PostService postService;
 
 	@GetMapping("/posts")
-	public List<PostRes> findAll() {
-		return postService.findAll();
+	public Page<PostRes> posts(@RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
+		return postService.findByPage(pageNumber, pageSize);
 	}
 
 	@GetMapping("/posts/{id}")
-	public PostRes findById(@PathVariable String id) {
+	public PostRes getPostById(@PathVariable String id) {
 		return postService.findById(id);
 	}
 

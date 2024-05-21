@@ -1,8 +1,9 @@
 package roon.practice.comments.application;
 
 import java.time.Instant;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import roon.practice.comments.domain.Category;
@@ -23,18 +24,16 @@ public class CategoryService {
 		return categoryRepository.save(category).getId();
 	}
 
-	public List<CategoryRes> findAll() {
-		var categories = categoryRepository.findAll();
-
-		return categories.stream()
-				.map(c -> new CategoryRes(c.getId(), c.getTitle(), c.getPostsCount(), c.getCreatedAt()))
-				.toList();
+	public Page<CategoryRes> findByPage(int pageNumber, int pageSize) {
+		var pageable = PageRequest.of(pageNumber, pageSize);
+		return categoryRepository.findAll(pageable)
+				.map(CategoryRes::from);
 	}
 
 	public CategoryRes findById(String id) {
 		var category = categoryRepository.findById(id)
 				.orElseThrow(DocumentNotFoundException::new);
 
-		return new CategoryRes(category.getId(), category.getTitle(), category.getPostsCount(), category.getCreatedAt());
+		return CategoryRes.from(category);
 	}
 }

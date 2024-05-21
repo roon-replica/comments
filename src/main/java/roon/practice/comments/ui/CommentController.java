@@ -1,11 +1,12 @@
 package roon.practice.comments.ui;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import roon.practice.comments.application.CommentService;
 import roon.practice.comments.ui.request.CreateCommentReq;
@@ -19,8 +20,8 @@ public class CommentController {
 	private final CommentService commentService;
 
 	@GetMapping("/comments")
-	public List<CommentRes> comments() {
-		return commentService.findAll();
+	public Page<CommentRes> comments(@RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
+		return commentService.findByPage(pageNumber, pageSize);
 	}
 
 	@GetMapping("/comments/{id}")

@@ -9,13 +9,15 @@
   - tag name validation에 시범 적용 (제거)
 - [ ] comment 무한 뎁스 구조 API
   - [x] 단순 CRUD
-  - [ ] 무한 depth
+  - [ ] 부모있는 1depth 댓글 CRUD
+  - [ ] 무한depth 댓글
 - [ ] soft delete
 - [ ] view, like count
 - [ ] comment vote
 - [ ] comment에 이미지, 사진 첨부
 - [ ] CRUD 기타
-  - [ ] pagination
+  - [ ] page based pagination
+  - [ ] cursor based pagination
 - [ ] 동시성 이슈
   - [ ] count 같은거 redis로?
 - [ ] 트래픽, 성능 이슈
@@ -29,5 +31,6 @@
   - [ ] 트랜잭션 사실상 못쓰는데 대처법?
   - [ ] index
   - [ ] join
+
 ### 화면...
   - [ ] 댓글 화면
